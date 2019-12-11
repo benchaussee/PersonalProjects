@@ -19,11 +19,11 @@ public class BankCustomerAccount {
  	
  	//methods
  	public void deposit(double amount) {
- 		balance = balance + amount;
+ 		balance += amount;
  	}
  	
  	public void withdraw(double amount) {
- 		balance = balance - amount;
+ 		balance -= amount;
  	}
  	
  	public int getAccountNumber() {
