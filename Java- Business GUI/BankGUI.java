@@ -1,19 +1,12 @@
 package Bank;
 
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -22,16 +15,22 @@ import javafx.stage.Stage;
  
 public class BankGUI extends Application implements EventHandler<ActionEvent>  {
 	private Bank mainBank;
-	private Button employeeButton,customerButton,backButton,addEmpButton,delEmpButton,addCustButton,backToCustLayoutButton,confirmNewCust;
-	private AddCustomerLayout addCustLayout;
-	private CustomerLayout custLayout;
-	private EmployeeLayout empTable;
-	private Font labelFont = new Font("Arial", 22);
+	private Button empLayoutButton,custLayoutButton,backButton,addEmpButton,delEmpButton,
+		addCustButton,backToCustLayoutButton,confirmNewCust,deleteCustSceneButton,delCustButton,
+		depWithButton,depositButton,withdrawButton,addEmployeeLayoutButton,backToShowEmp;
+	private AddCustomerScene addCustLayout;
+	private AddEmployeeScene addEmpLayout;
+	private CustomerScene custLayout;
+	private DelCustomerScene delCustomerLayout;
+	private DepositWithdrawScene depositWithdrawLayout;
+	private EmployeeScene empLayout;
 	private HBox employeeHbox;
 	private Label openingLabel;
-	private Scene mainScene,employeeTableScene,customerTableScene,addCustScene;
-	private Stage stage;
-	private VBox mainVbox,employeeVbox,customerVbox,addCustVbox;
+	private static Scene mainScene;
+	private Scene employeeTableScene,customerTableScene,addCustScene,delCustScene,
+		depWithScene,addEmployeeScene;
+	private static Stage stage;
+	private VBox mainVbox,employeeVbox,customerVbox,addCustVbox,delCustVbox;
 	
 
 	public static void main(String[] args) {
@@ -40,7 +39,8 @@ public class BankGUI extends Application implements EventHandler<ActionEvent>  {
 
     public void start(Stage primaryStage) throws Exception {
     	//Bank object
-    	mainBank = new Bank("Bank of Twitch");
+    	mainBank = new Bank("Bank of Snapchat");
+    	Font labelFont = new Font("Arial", 22);
 
     	//Title of the window
     	stage = primaryStage;
@@ -49,29 +49,40 @@ public class BankGUI extends Application implements EventHandler<ActionEvent>  {
 		openingLabel.setFont(labelFont);
 
 		//BUTTONS
-		employeeButton = new Button("Employees");
-		addEmpButton = new Button("Add new employee");
-		delEmpButton = new Button("Delete employee");
-		customerButton = new Button("Customers");
+		empLayoutButton = new Button("Employees");
+		addEmpButton = new Button("Add new employee");//delete
+		delEmpButton = new Button("Delete employee");//delete
+		custLayoutButton = new Button("Customers");
 		backButton = new Button("Back");
 		addCustButton = new Button("Add Customer");
-		backToCustLayoutButton = new Button("Back");
-		confirmNewCust = new Button("Create New Customer");
-	
+		backToCustLayoutButton = new Button("Back");//delete
+		confirmNewCust = new Button("Corfirm New Customer");//delete
+		deleteCustSceneButton = new Button("Delete Customer");
+		delCustButton = new Button("Delete");//deltete
+		depWithButton = new Button("Deposit/Withdraw");
+		depositButton = new Button("Deposit");//delete
+		withdrawButton = new Button("Withdraw");//delete
+		backToShowEmp = new Button("Back");//delete
 		//Button actions
-		employeeButton.setOnAction(this);
-		addEmpButton.setOnAction(this);
-		delEmpButton.setOnAction(this);
+		empLayoutButton.setOnAction(this);
+		addEmpButton.setOnAction(this);//delete
+		delEmpButton.setOnAction(this);//delete
 		backButton.setOnAction(this);
-		customerButton.setOnAction(this);
+		custLayoutButton.setOnAction(this);
 		addCustButton.setOnAction(this);
-		backToCustLayoutButton.setOnAction(this);
-		confirmNewCust.setOnAction(this);
-		
+		backToCustLayoutButton.setOnAction(this);//delete
+		confirmNewCust.setOnAction(this);//delete
+		deleteCustSceneButton.setOnAction(this);	
+		delCustButton.setOnAction(this);//delete
+		depWithButton.setOnAction(this);
+		depositButton.setOnAction(this);//delete
+		withdrawButton.setOnAction(this);//delete
+		backToShowEmp.setOnAction(this);//delete
+
 		// Put everything in the VBox
-		mainVbox = new VBox(openingLabel, employeeButton, customerButton);
-		mainVbox.setSpacing(20);
-		mainVbox.setAlignment(Pos.TOP_CENTER);
+		mainVbox = new VBox(openingLabel, empLayoutButton, custLayoutButton);
+		mainVbox.setSpacing(30);
+		mainVbox.setAlignment(Pos.CENTER);
 
 		//set the scene
 		mainScene = new Scene(mainVbox,300,250);
@@ -82,55 +93,27 @@ public class BankGUI extends Application implements EventHandler<ActionEvent>  {
     }
 	@Override
 	public void handle(ActionEvent event) {
-		//show employee table
-		if (event.getSource()== employeeButton) {
-			empTable = new EmployeeLayout(mainBank);
-			empTable.generateEmployeeTable();
-			employeeVbox = new VBox();
-			employeeVbox.setSpacing(10);
-			employeeHbox = new HBox();
-			employeeHbox.setSpacing(5);
-			employeeHbox.getChildren().addAll(addEmpButton,delEmpButton);
-	    	employeeVbox.getChildren().addAll(backButton,empTable.getEmployeeTable(),employeeHbox);
-	    	employeeTableScene = new Scene(employeeVbox);
-			stage.setScene(employeeTableScene);
+		//show employees scene
+		if (event.getSource()== empLayoutButton ||event.getSource()==backToShowEmp) {
+			empLayout = new EmployeeScene(mainBank);
+			empLayout.setEmployeeLayoutScene();
 		}
-		//show customer table
-		if (event.getSource()== customerButton || event.getSource()==backToCustLayoutButton) {
-			custLayout = new CustomerLayout(mainBank);
-			custLayout.generateCustomerTable();
-			customerVbox = new VBox();
-			customerVbox.setSpacing(10);
-			customerVbox.getChildren().addAll(backButton,custLayout.getCustomerLayout(),addCustButton);
-			customerTableScene = new Scene(customerVbox);
-			stage.setScene(customerTableScene);
-		}
-		//go back to main
-		if (event.getSource()==backButton) {
-			stage.setScene(mainScene);
-		}
-		//Add-customer Scene
-		if (event.getSource()==addCustButton) {
-			addCustVbox = new VBox();
-			addCustLayout = new AddCustomerLayout(mainBank);
-			addCustLayout.generateAddCustomerLayout();
-			addCustVbox.getChildren().addAll(backToCustLayoutButton,addCustLayout.getGridPane(),confirmNewCust);
-			addCustScene = new Scene(addCustVbox);
-			stage.setScene(addCustScene);
-		}
-		//Creating a new Customer
-		if (event.getSource()==confirmNewCust) {
-			addCustLayout = new AddCustomerLayout(mainBank);
-			addCustLayout.createNewCustomerFromGUI();
+		//show customers scene
+		if (event.getSource()== custLayoutButton) {
+			custLayout = new CustomerScene(mainBank);
+			custLayout.setCustomerLayoutStage();
 		}
 		
+		
+	}
+	public static Stage getStage() {
+		return stage;
+	}
+	public static Scene getMainScene() {
+		return mainScene;
 	}
 	
 }
-
-
-
-
 
 
 

@@ -21,7 +21,7 @@ public class Bank {
  ////////////////////////////////////////////////////////////////////////////////////////////////
  //              EMPLOYEE METHODS           ///////////////////////////////////////////////////// 
  ////////////////////////////////////////////////////////////////////////////////////////////////
-	public void createNewEmployee(String first, String last, int employeeNum, int sal) {
+	public void createNewEmployee(String first, String last, int employeeNum, double sal) {
 		// linear search to see if employee number is being used
 		for (BankEmployee oneEmployee : listOfAllEmployees) {
 			if (oneEmployee.getEmpNumber() == employeeNum) {

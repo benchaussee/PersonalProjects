@@ -2,8 +2,6 @@ package Bank;
 
 import java.text.NumberFormat;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 public class BankCustomer {
 	

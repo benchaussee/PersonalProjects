@@ -2,8 +2,6 @@ package Bank;
 
 import java.text.NumberFormat;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 // How we add one employee at a time
 public class BankEmployee{
 	
@@ -19,7 +17,7 @@ public class BankEmployee{
  		empFirstName = "ben";
  	}
  	
- 	public BankEmployee(String first, String last, int eNum, int sal) {
+ 	public BankEmployee(String first, String last, int eNum, double sal) {
  		empFirstName = first;
  		empLastName = last;
  		empNumber = eNum;
