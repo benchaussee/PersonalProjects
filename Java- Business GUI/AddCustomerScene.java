@@ -17,10 +17,6 @@ public class AddCustomerScene implements EventHandler<ActionEvent>{
 	private Button backToCustLayoutButton,confirmNewCust;
 	private CustomerScene custLayout;
 	private GridPane gridPane;
-	private Label fNameLabel;
-	private Label lNameLabel;
-	private Label acctNumLabel;
-	private Label balLabel;
 	private Label AddCustomer;
 	private TextField fNameField;
 	private TextField lNameField;
@@ -33,19 +29,22 @@ public class AddCustomerScene implements EventHandler<ActionEvent>{
 	
 	public void setAddCustomerLayoutScene() {
 		gridPane = new GridPane();	
+		//Buttons
 		backToCustLayoutButton = new Button("Back");
 		backToCustLayoutButton.setOnAction(this);
 		confirmNewCust = new Button("Corfirm New Customer");
 		confirmNewCust.setOnAction(this);
 			
-		//First
+		//Header Label
 		Font font = new Font("Arial", 22);
 		AddCustomer = new Label("Add Customer-");
 		AddCustomer.setFont(font);
-		fNameLabel = new Label("First Name:");
-		lNameLabel = new Label("Last Name:");
-		acctNumLabel = new Label("Account Number:");
-		balLabel = new Label("Balance:");
+
+		//Customer info Labels and Text Fields
+		Label fNameLabel = new Label("First Name:");
+		Label lNameLabel = new Label("Last Name:");
+		Label acctNumLabel = new Label("Account Number:");
+		Label balLabel = new Label("Balance:");
 		fNameField = new TextField();
 		lNameField = new TextField();
 		acctNumField = new TextField();
@@ -81,7 +80,8 @@ public class AddCustomerScene implements EventHandler<ActionEvent>{
 	}
 	
 	public void createNewCustomerFromGUI() {
-		copyOfBank.createCustomerAccount(fNameField.getText().toString(),lNameField.getText().toString(),Integer.parseInt(acctNumField.getText().toString()),Double.parseDouble(balField.getText().toString()));
+		copyOfBank.createCustomerAccount(fNameField.getText().toString(),lNameField.getText().toString(),
+				Integer.parseInt(acctNumField.getText().toString()),Double.parseDouble(balField.getText().toString()));
 	}
 	
 	public GridPane getGridPane() {

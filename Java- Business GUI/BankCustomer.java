@@ -2,7 +2,6 @@ package Bank;
 
 import java.text.NumberFormat;
 
-
 public class BankCustomer {
 	
  	// customer instance variables

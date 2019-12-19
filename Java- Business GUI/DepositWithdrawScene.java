@@ -16,6 +16,7 @@ import javafx.scene.text.Font;
 public class DepositWithdrawScene implements EventHandler<ActionEvent>{
 	private Bank copyOfBank;
 	private Button depositButton,withdrawButton,backToCustLayoutButton;
+	private CustomerScene custScene;
 	private GridPane gridPane;
 	private Label amountLabel,acctNumLabel;
 	private TextField amountField,acctNumField;
@@ -26,6 +27,7 @@ public class DepositWithdrawScene implements EventHandler<ActionEvent>{
 	}
 	
 	public void setDepWithScene() {
+		//GridPane and Buttons
 		gridPane = new GridPane();	
 		depositButton = new Button("Deposit");
 		depositButton.setOnAction(this);
@@ -34,12 +36,11 @@ public class DepositWithdrawScene implements EventHandler<ActionEvent>{
 		backToCustLayoutButton = new Button("Back");
 		backToCustLayoutButton.setOnAction(this);
 			
-		//Stuff
+		//Labels and Fields
 		acctNumLabel = new Label("Account Number:");
 		amountLabel = new Label("Amount:");
 		acctNumField = new TextField();
 		amountField = new TextField();
-		
 		
 		//Setting size for the pane  
 	    gridPane.setMinSize(400, 200); 
@@ -59,6 +60,8 @@ public class DepositWithdrawScene implements EventHandler<ActionEvent>{
 	    gridPane.add(acctNumField, 1, 0); 
 	    gridPane.add(amountLabel, 0, 1);
 	    gridPane.add(amountField, 1, 1);
+
+	    //organizing the scene
 		HBox hbox = new HBox();
 		hbox.setSpacing(10);
 		hbox.getChildren().addAll(depositButton,withdrawButton);
@@ -75,15 +78,19 @@ public class DepositWithdrawScene implements EventHandler<ActionEvent>{
 		copyOfBank.withdraw(Integer.parseInt(acctNumField.getText()), Double.parseDouble(amountField.getText()));
 
 	}
-	
-	public GridPane getGridPane() {
-		return gridPane;
-	}
 
 	@Override
 	public void handle(ActionEvent event) {
-		// TODO Auto-generated method stub
-		
+		if (event.getSource()==depositButton) {
+			depositFromGUI();
+		}
+		if (event.getSource()==withdrawButton) {
+			withdrawFromGUI();
+		}
+		if (event.getSource()==backToCustLayoutButton) {
+			custScene = new CustomerScene(copyOfBank);
+			custScene.setCustomerLayoutStage();
+		}
 	}
 		
 }

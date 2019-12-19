@@ -23,6 +23,7 @@ public class EmployeeScene implements EventHandler<ActionEvent>  {
 	}
 	 
 	public void setEmployeeLayoutScene() {
+		//Buttons
 		addEmpButton = new Button("Add new employee");
 		addEmpButton.setOnAction(this);
 		delEmpButton = new Button("Delete employee");
@@ -83,10 +84,3 @@ public class EmployeeScene implements EventHandler<ActionEvent>  {
 		
 	}
 }
-
-
-
-
-
-
-

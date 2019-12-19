@@ -14,11 +14,11 @@ import javafx.scene.text.Font;
 
 public class DelCustomerScene implements EventHandler<ActionEvent>{
 	private Bank copyOfBank;
-	private Button backToCustLayoutButton,delCustButton;
+	private Button backToCustSceneButton,delCustButton;
+	private CustomerScene custScene;
 	private GridPane gridPane;
 	private Label acctNumLabel,deleteCustomer;
 	private TextField acctNumField;
-	private Font labelFont = new Font("Arial", 22);
 
 		
 	public DelCustomerScene(Bank someBank) {
@@ -27,14 +27,19 @@ public class DelCustomerScene implements EventHandler<ActionEvent>{
 	
 	public void setDelCustScene() {
 		gridPane = new GridPane();	
-		backToCustLayoutButton = new Button("Back");
-		backToCustLayoutButton.setOnAction(this);
+		//Buttons
+		backToCustSceneButton = new Button("Back");
+		backToCustSceneButton.setOnAction(this);
 		delCustButton = new Button("Delete");
 		delCustButton.setOnAction(this);
 			
-		deleteCustomer = new Label("Delete Customer-");
+		//Header Label
+		Font labelFont = new Font("Arial", 22);
+		Label deleteCustomer = new Label("Delete Customer-");
 		deleteCustomer.setFont(labelFont);
-		acctNumLabel = new Label("Account Number:");
+
+		//Acct Num Label
+		Label acctNumLabel = new Label("Account Number:");
 		acctNumField = new TextField();
 		
 		//Setting size for the pane  
@@ -55,7 +60,7 @@ public class DelCustomerScene implements EventHandler<ActionEvent>{
 	    gridPane.add(acctNumLabel, 0, 3); 
 	    gridPane.add(acctNumField, 1, 3); 
 		VBox vbox = new VBox();
-		vbox.getChildren().addAll(backToCustLayoutButton,gridPane,delCustButton);
+		vbox.getChildren().addAll(backToCustSceneButton,gridPane,delCustButton);
 		Scene delCustScene = new Scene(vbox);
 		BankGUI.getStage().setScene(delCustScene);
 	}
@@ -68,6 +73,10 @@ public class DelCustomerScene implements EventHandler<ActionEvent>{
 	public void handle(ActionEvent event) {
 		if (event.getSource()==delCustButton) {
 			deleteCustFromGUI();
+		}
+		if (event.getSource()==backToCustSceneButton) {
+			custScene = new CustomerScene(copyOfBank);
+			custScene.setCustomerLayoutStage();
 		}
 	}
 		

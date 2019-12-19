@@ -18,8 +18,6 @@ public class DeleteEmployeeScene implements EventHandler<ActionEvent> {
 	private Bank copyOfBank;
 	private Button delEmpButton,backToEmpLayoutButton;
 	private EmployeeScene empLayout;
-	private GridPane gridPane;
-	private Label empNumLabel,delEmpLabel;
 	private TextField empNumField;
 	private Font labelFont = new Font("Arial", 22);
 
@@ -31,7 +29,8 @@ public class DeleteEmployeeScene implements EventHandler<ActionEvent> {
 	
 	public void setDelEmpScene() {
 		//pane
-		gridPane = new GridPane();	
+		GridPane gridPane = new GridPane();	
+
 		//Buttons
 		delEmpButton = new Button("Delete");
 		delEmpButton.setOnAction(this);
@@ -39,11 +38,11 @@ public class DeleteEmployeeScene implements EventHandler<ActionEvent> {
 		backToEmpLayoutButton.setOnAction(this);
 			
 		//header label
-		delEmpLabel = new Label("Delete Employee-");
+		Label delEmpLabel = new Label("Delete Employee-");
 		delEmpLabel.setFont(labelFont);
 		
 		//employee label and text field
-		empNumLabel = new Label("Employee Number:");
+		Label empNumLabel = new Label("Employee Number:");
 		empNumField = new TextField();
 		
 		//Setting size for the pane  

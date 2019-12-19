@@ -24,6 +24,7 @@ public class CustomerScene implements EventHandler<ActionEvent> {
 	}
 	
 	public void setCustomerLayoutStage() {
+		//Buttons	
 		addCustSceneButton = new Button("Add Customer");
 		addCustSceneButton.setOnAction(this);
 		deleteCustSceneButton = new Button("Delete Customer");
@@ -33,10 +34,6 @@ public class CustomerScene implements EventHandler<ActionEvent> {
 		backToMainButton = new Button("Back");
 		backToMainButton.setOnAction(this);
 
-		
-		//Clearing tables and re-adding
-	//	Bank.clearCustomerTable();
-	//	copyOfBank.clearCustomerList();
 		if (runOnlyOnce < 1) {
 		copyOfBank.addDemoCustomers();
 		}
@@ -58,6 +55,7 @@ public class CustomerScene implements EventHandler<ActionEvent> {
 		balanceCol.setMinWidth(200);
 		balanceCol.setCellValueFactory(new PropertyValueFactory<>("balance"));   	   		
 	
+		//Arranging the nodes
 		table = new TableView<>();
 		table.setItems(Bank.getCustomerObservableList());
 		table.getColumns().addAll(fNameCol,lNameCol,acctNumCol,balanceCol);
@@ -93,17 +91,4 @@ public class CustomerScene implements EventHandler<ActionEvent> {
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 

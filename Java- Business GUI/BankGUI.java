@@ -1,5 +1,7 @@
 package Bank;
 
+import java.io.FileInputStream;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -7,6 +9,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -15,22 +19,11 @@ import javafx.stage.Stage;
  
 public class BankGUI extends Application implements EventHandler<ActionEvent>  {
 	private Bank mainBank;
-	private Button empLayoutButton,custLayoutButton,backButton,addEmpButton,delEmpButton,
-		addCustButton,backToCustLayoutButton,confirmNewCust,deleteCustSceneButton,delCustButton,
-		depWithButton,depositButton,withdrawButton,addEmployeeLayoutButton,backToShowEmp;
-	private AddCustomerScene addCustLayout;
-	private AddEmployeeScene addEmpLayout;
-	private CustomerScene custLayout;
-	private DelCustomerScene delCustomerLayout;
-	private DepositWithdrawScene depositWithdrawLayout;
-	private EmployeeScene empLayout;
-	private HBox employeeHbox;
-	private Label openingLabel;
+	private Button empSceneButton,custSceneButton;
+	private CustomerScene custScene;
+	private EmployeeScene empScene;
 	private static Scene mainScene;
-	private Scene employeeTableScene,customerTableScene,addCustScene,delCustScene,
-		depWithScene,addEmployeeScene;
 	private static Stage stage;
-	private VBox mainVbox,employeeVbox,customerVbox,addCustVbox,delCustVbox;
 	
 
 	public static void main(String[] args) {
@@ -38,54 +31,36 @@ public class BankGUI extends Application implements EventHandler<ActionEvent>  {
     }
 
     public void start(Stage primaryStage) throws Exception {
-    	//Bank object
-    	mainBank = new Bank("Bank of Snapchat");
-    	Font labelFont = new Font("Arial", 22);
-
-    	//Title of the window
+    	//stage/window
     	stage = primaryStage;
     	stage.setTitle("Your Bank");
-		openingLabel = new Label("Welcome to " + mainBank.getBankName());
+
+    	//Making primary Bank object
+    	mainBank = new Bank("Bank of Snapchat");
+
+    	//label on home screen
+    	Image snapImage = new Image(new FileInputStream("D:\\Pictures\\snpachapt.png"));
+    	ImageView imageview = new ImageView(snapImage);
+    	
+		Label openingLabel = new Label("Welcome to " + mainBank.getBankName());
+		Font labelFont = new Font("Arial", 22);
 		openingLabel.setFont(labelFont);
 
 		//BUTTONS
-		empLayoutButton = new Button("Employees");
-		addEmpButton = new Button("Add new employee");//delete
-		delEmpButton = new Button("Delete employee");//delete
-		custLayoutButton = new Button("Customers");
-		backButton = new Button("Back");
-		addCustButton = new Button("Add Customer");
-		backToCustLayoutButton = new Button("Back");//delete
-		confirmNewCust = new Button("Corfirm New Customer");//delete
-		deleteCustSceneButton = new Button("Delete Customer");
-		delCustButton = new Button("Delete");//deltete
-		depWithButton = new Button("Deposit/Withdraw");
-		depositButton = new Button("Deposit");//delete
-		withdrawButton = new Button("Withdraw");//delete
-		backToShowEmp = new Button("Back");//delete
+		empSceneButton = new Button("Employees");
+		custSceneButton = new Button("Customers");
 		//Button actions
-		empLayoutButton.setOnAction(this);
-		addEmpButton.setOnAction(this);//delete
-		delEmpButton.setOnAction(this);//delete
-		backButton.setOnAction(this);
-		custLayoutButton.setOnAction(this);
-		addCustButton.setOnAction(this);
-		backToCustLayoutButton.setOnAction(this);//delete
-		confirmNewCust.setOnAction(this);//delete
-		deleteCustSceneButton.setOnAction(this);	
-		delCustButton.setOnAction(this);//delete
-		depWithButton.setOnAction(this);
-		depositButton.setOnAction(this);//delete
-		withdrawButton.setOnAction(this);//delete
-		backToShowEmp.setOnAction(this);//delete
+		empSceneButton.setOnAction(this);
+		custSceneButton.setOnAction(this);
 
-		// Put everything in the VBox
-		mainVbox = new VBox(openingLabel, empLayoutButton, custLayoutButton);
-		mainVbox.setSpacing(30);
-		mainVbox.setAlignment(Pos.CENTER);
+		// VBox as parent node
+		VBox vbox = new VBox();
+		vbox = new VBox(imageview,openingLabel, empSceneButton, custSceneButton);
+		vbox.setSpacing(30);
+		vbox.setAlignment(Pos.CENTER);
 
 		//set the scene
-		mainScene = new Scene(mainVbox,300,250);
+		mainScene = new Scene(vbox,330,280);
 
     	//show the scene
     	stage.setScene(mainScene);
@@ -94,18 +69,18 @@ public class BankGUI extends Application implements EventHandler<ActionEvent>  {
 	@Override
 	public void handle(ActionEvent event) {
 		//show employees scene
-		if (event.getSource()== empLayoutButton ||event.getSource()==backToShowEmp) {
-			empLayout = new EmployeeScene(mainBank);
-			empLayout.setEmployeeLayoutScene();
+		if (event.getSource()== empSceneButton) {
+			empScene = new EmployeeScene(mainBank);
+			empScene.setEmployeeLayoutScene();
 		}
 		//show customers scene
-		if (event.getSource()== custLayoutButton) {
-			custLayout = new CustomerScene(mainBank);
-			custLayout.setCustomerLayoutStage();
+		if (event.getSource()== custSceneButton) {
+			custScene = new CustomerScene(mainBank);
+			custScene.setCustomerLayoutStage();
 		}
-		
-		
 	}
+
+	//static methods
 	public static Stage getStage() {
 		return stage;
 	}
@@ -114,7 +89,3 @@ public class BankGUI extends Application implements EventHandler<ActionEvent>  {
 	}
 	
 }
-
-
-
-
